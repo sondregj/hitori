@@ -8,7 +8,6 @@ test('From valid 2D array', () => {
 
     expect(board).toHaveProperty('size')
     expect(board).toHaveProperty('rows')
-    expect(board).toHaveProperty('columns')
 })
 
 test('Invalid 2D array throws', () => {
