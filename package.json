@@ -15,7 +15,7 @@
 		"build": "tsc",
 		"format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
 		"lint": "tslint -p tsconfig.json",
-		"test": "ava",
+		"test": "jest",
 		"preversion": "npm run lint",
 		"version": "npm run format && git add -A src",
 		"postversion": "git push && git push --tags",
@@ -25,12 +25,23 @@
 		"url": "https://github.com/sondregj/hitori/issues"
 	},
 	"devDependencies": {
-		"ava": "^2.3.0",
-		"dotenv": "^8.1.0",
-		"tslint": "^5.20.0",
-		"typescript": "^3.6.3",
+		"@types/jest": "^24.0.18",
+		"jest": "^24.9.0",
 		"prettier": "1.18.2",
-		"tslint-config-prettier": "1.18.0"
+		"ts-jest": "^24.0.2",
+		"tslint": "^5.20.0",
+		"tslint-config-prettier": "1.18.0",
+		"typescript": "^3.6.3"
+	},
+	"jest": {
+		"transform": {
+			"^.+\\.tsx?$": "ts-jest"
+		},
+		"moduleFileExtensions": [
+			"ts",
+			"js"
+		],
+		"testRegex": "(/test/.*|(\\.|/)(test|spec))\\.[jt]sx?$"
 	},
 	"files": [
 		"dist/**/*"
