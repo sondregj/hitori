@@ -41,7 +41,7 @@
 			"ts",
 			"js"
 		],
-		"testRegex": "(/test/.*|(\\.|/)(test|spec))\\.[jt]sx?$"
+		"testRegex": "(/test/unit/.*|(\\.|/)(test|spec))\\.[jt]sx?$"
 	},
 	"files": [
 		"dist/**/*"
