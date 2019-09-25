@@ -38,8 +38,8 @@ A simple Hitori solver, implemented with TypeScript.
 ## Progress
 
 - [x] Models
-- [ ] Solver
-- [ ] Tests
+- [x] Solver
+- [x] Tests
 - [ ] Documentation
 
 ## Usage
@@ -55,7 +55,7 @@ const board = HitoriBoard.from2DArray([
     [6, 4, 2, 1, 2],
 ])
 
-const solved = solve(board)
+const solved = solve({ board })
 ```
 
 ## License
