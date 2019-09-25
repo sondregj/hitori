@@ -1,7 +1,9 @@
 export interface IHitoriCell {
     value: number
-    checked?: boolean
-    marked?: boolean
+    seen?: boolean
+
+    confirmedBlack?: boolean
+    confirmedWhite?: boolean
 }
 
 export interface IHitoriRow {

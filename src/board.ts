@@ -1,13 +1,13 @@
 import { InvalidArrayError } from './errors'
-import { IHitoriBoard, IHitoriRow, IHitoriColumn, IHitoriCell } from './types'
+import { IHitoriBoard, IHitoriCell, IHitoriColumn, IHitoriRow } from './types'
 
 class HitoriBoard implements IHitoriBoard {
     public static from2DArray(array: number[][]): HitoriBoard {
-        if (array.length < 1) {
+        const size = array.length
+
+        if (size < 1) {
             throw new InvalidArrayError('Array is empty.')
         }
-
-        const size = array.length
 
         for (const row of array) {
             if (row.length !== size) {
@@ -67,8 +67,10 @@ class HitoriBoard implements IHitoriBoard {
     }
 
     public get asColumns(): IHitoriColumn[] {
-        return this.rows[0].cells.map((col, i) => ({
-            cells: this.rows.map(row => row.cells[i]),
+        const rows = this.rows
+
+        return rows[0].cells.map((col, i) => ({
+            cells: rows.map(row => row.cells[i]),
         }))
     }
 
@@ -76,12 +78,27 @@ class HitoriBoard implements IHitoriBoard {
         return this.rows.map(row => row.cells.map(cell => cell.value))
     }
 
+    /**
+     * Printout intended for Stacc competition
+     *
+     * https://stacc.com/fagkveldkonkurranse
+     */
+    public toString = (): string =>
+        this.rows
+            .flatMap(row => row.cells)
+            .reduce((prev, curr) => prev + (curr.confirmedBlack ? 'X' : curr.value), '')
+
     public getCoordinate(x: number, y: number): IHitoriCell {
-        if (Math.max(x, y) + 1 > this.size) {
+        if (Math.min(x, y) < 0 || Math.max(x, y) + 1 > this.size) {
             throw new Error('Index out of bounds.')
         }
 
         return this.rows[y].cells[x]
+    }
+
+    public copy(): HitoriBoard {
+        // TODO
+        return this
     }
 }
 
