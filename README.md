@@ -55,8 +55,10 @@ const board = HitoriBoard.from2DArray([
     [6, 4, 2, 1, 2],
 ])
 
-const solved = solve({ board })
+const [solved, iterations] = solve({ board })
 ```
+
+The solver function returns an array with the final solution, if found, and an array of all the intermediate iterations.
 
 ## License
 
