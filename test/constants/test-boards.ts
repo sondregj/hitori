@@ -11,6 +11,13 @@ export const invalid: number[][] = [[1, 2, 3], [1, 2], [1, 2, 3, 4]]
 
 export const fiveByFive: number[][] = []
 
+export const fourByFour: number[][] = [
+    [1, 1, 1, 2],
+    [3, 4, 5, 6],
+    [7, 8, 9, 10],
+    [3, 11, 5, 12],
+]
+
 export const unsolvable: number[][] = [
     [1, 1, 1, 1, 1],
     [1, 1, 1, 1, 1],
