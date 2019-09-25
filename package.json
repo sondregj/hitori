@@ -1,6 +1,6 @@
 {
 	"name": "hitori",
-	"version": "1.0.0",
+	"version": "0.1.0",
 	"description": "Hitori solver",
 	"author": "Sondre Gjellestad <sondre.gjellestad@hotmail.com> (https://sondregjellestad.space)",
 	"homepage": "https://github.com/sondregj/hitori#readme",
@@ -11,6 +11,7 @@
 	"license": "MIT",
 	"main": "dist/index.js",
 	"types": "dist/index.d.js",
+	"declaration": true,
 	"scripts": {
 		"build": "tsc",
 		"format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
@@ -34,6 +35,11 @@
 		"typescript": "^3.6.3"
 	},
 	"jest": {
+		"globals": {
+			"ts-jest": {
+				"tsConfig": "tsconfig.json"
+			}
+		},
 		"transform": {
 			"^.+\\.tsx?$": "ts-jest"
 		},
