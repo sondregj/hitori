@@ -1,9 +1,4 @@
-import HitoriBoard, {
-    solve,
-    IHitoriBoard,
-    IHitoriCell,
-    IHitoriColumn,
-    IHitoriRow,
-} from './core'
+export { default as HitoriBoard } from './board'
 
-export { HitoriBoard, solve, IHitoriBoard, IHitoriCell, IHitoriColumn, IHitoriRow }
+export { IHitoriBoard, IHitoriRow, IHitoriColumn, IHitoriCell } from './types'
+export { solve } from './solver'
