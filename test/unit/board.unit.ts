@@ -11,9 +11,7 @@ test('From valid 2D array', () => {
 })
 
 test('Invalid 2D array throws', () => {
-    expect(() => HitoriBoard.from2DArray([[1, 2], [1], [1, 2, 3]])).toThrowError(
-        InvalidArrayError,
-    )
+    expect(() => HitoriBoard.from2DArray([[1, 2], [1], [1, 2, 3]])).toThrow()
 })
 
 test.todo('Get coordinates')
