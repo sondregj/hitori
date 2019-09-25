@@ -1,3 +1,6 @@
+import { HitoriBoard } from '.'
+
+// Data types
 export interface IHitoriCell {
     value: number
     seen?: boolean
@@ -20,4 +23,15 @@ export interface IHitoriBoard {
     rows: IHitoriRow[]
 }
 
-export default IHitoriBoard
+// Transform functions
+export type LineTransformer = (
+    line: IHitoriRow | IHitoriColumn,
+    ...params: any[]
+) => IHitoriRow | IHitoriColumn
+
+export type BoardTransformer = (board: HitoriBoard, ...params: any[]) => HitoriBoard
+
+// Checker functions
+export type LineChecker = (line: IHitoriRow | IHitoriColumn) => boolean
+
+export type BoardChecker = (board: HitoriBoard, ...params: any[]) => boolean
