@@ -1,5 +1,15 @@
 import { InvalidArrayError } from './errors'
-import { IHitoriBoard, IHitoriCell, IHitoriColumn, IHitoriRow } from './types'
+import {
+    BoardTransformer,
+    IHitoriBoard,
+    IHitoriCell,
+    IHitoriColumn,
+    IHitoriRow,
+    LineTransformer,
+} from './types'
+
+import { isSolved } from './solver/validator'
+import { transposeBoard } from './utils'
 
 class HitoriBoard implements IHitoriBoard {
     public static from2DArray(array: number[][]): HitoriBoard {
@@ -97,8 +107,46 @@ class HitoriBoard implements IHitoriBoard {
     }
 
     public copy(): HitoriBoard {
-        // TODO
-        return this
+        const rows = this.asRows.map(row => ({
+            cells: row.cells.map(cell => ({ ...cell })),
+        }))
+
+        return new HitoriBoard({ size: this.size, rows })
+    }
+
+    public copyData(): IHitoriBoard {
+        const rows = this.asRows.map(row => ({
+            cells: row.cells.map(cell => ({ ...cell })),
+        }))
+
+        return { size: this.size, rows }
+    }
+
+    public transformAllRowsAndColumns(lineTransformer: LineTransformer): HitoriBoard {
+        const { size } = this
+
+        const rows = this.asRows
+        const transformedRows = rows.map(row => lineTransformer(row))
+
+        const intermediateBoard: HitoriBoard = new HitoriBoard({
+            rows: transformedRows,
+            size,
+        })
+
+        const columns = intermediateBoard.asColumns
+        const transformedColumns = columns.map(column => lineTransformer(column))
+
+        return new HitoriBoard({ rows: transposeBoard(transformedColumns), size })
+    }
+
+    public transformBoard(boardTransformer: BoardTransformer): HitoriBoard {
+        const transformedBoard = boardTransformer(this)
+
+        return new HitoriBoard(transformedBoard)
+    }
+
+    public solved(): boolean {
+        return isSolved(this)
     }
 }
 
