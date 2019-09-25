@@ -1,6 +1,6 @@
-import { IHitoriColumn, IHitoriRow } from '../types'
+import { IHitoriColumn, IHitoriRow, LineChecker } from '../types'
 
-export function onlyDistinctOnLine(line: IHitoriRow | IHitoriColumn): boolean {
+export const onlyDistinctOnLine: LineChecker = line => {
     const values = line.cells
         .filter(cell => !cell.confirmedBlack)
         .map(cell => cell.value)
@@ -8,7 +8,7 @@ export function onlyDistinctOnLine(line: IHitoriRow | IHitoriColumn): boolean {
     return values.length === [...new Set(values)].length
 }
 
-export function noAdjacentBlackOnLine(line: IHitoriRow | IHitoriColumn): boolean {
+export const noAdjacentBlackOnLine: LineChecker = line => {
     return line.cells
         .map(cell => !!cell.confirmedBlack)
         .reduce(

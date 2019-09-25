@@ -1,29 +1,30 @@
 import HitoriBoard from '../board'
 
 import { noAdjacentBlackOnLine, onlyDistinctOnLine } from './line'
-import { IHitoriRow } from '../types'
 
-function numberOfIslands(board: HitoriBoard): number {
+import { BoardChecker, IHitoriRow } from '../types'
+
+export const allCellsOrthogonallyConnected: BoardChecker = board => {
     const { size } = board
     const rows = board.asRows
 
     const visited: boolean[][] = rows.map(row => [])
 
-    let islands = 0
+    let connectedSurfaces = 0
 
     for (let y = 0; y < size; y++) {
         for (let x = 0; x < size; x++) {
             if (!visited[y][x] && !rows[y].cells[x].confirmedBlack) {
                 dfs(x, y, rows, visited)
 
-                islands++
+                connectedSurfaces++
             } else {
                 visited[y][x] = true
             }
         }
     }
 
-    return islands
+    return connectedSurfaces === 1
 }
 
 function dfs(x: number, y: number, rows: IHitoriRow[], visited: boolean[][]) {
@@ -61,51 +62,7 @@ function isCellOpen(
     )
 }
 
-export function allCellsOrthogonallyConnected(board: HitoriBoard): boolean {
-    const { size } = board
-    const rows = board.asRows.map(row => row.cells)
-
-    return numberOfIslands(board) === 1
-
-    const targets = (x: number, y: number): Array<[number, number]> => [
-        [x - 1, y],
-        [x + 1, y],
-        [x, y - 1],
-        [x, y + 1],
-    ]
-
-    // TODO Figure out how to check if all on a single surface
-
-    return (
-        rows
-            .map((row, yIndex): boolean[] =>
-                row.map((cell, xIndex): boolean => {
-                    const toCheck = targets(xIndex, yIndex)
-
-                    return toCheck.reduce((prev, target) => {
-                        const [x, y] = target
-
-                        // If checking outside board, treat as blocked
-                        if (Math.min(x, y) < 0 || Math.max(x, y) >= size) {
-                            return false || prev
-                        }
-
-                        return !cell.confirmedBlack
-                            ? !rows[y][x].confirmedBlack || prev
-                            : true
-                    }, Boolean(false))
-                }),
-            )
-
-            // TODO We're currently only checking that every white cell has a neighbor
-            // Summarize to check if all cells are valid
-
-            .flat()
-            .reduce((prev, curr) => prev && curr, Boolean(true))
-    )
-}
-
-export function onlyDistinctOnLinesOnBoard(board: HitoriBoard): boolean {
+export const onlyDistinctOnLinesOnBoard: BoardChecker = board => {
     const rows = board.asRows
     const columns = board.asColumns
 
@@ -122,11 +79,11 @@ export function onlyDistinctOnLinesOnBoard(board: HitoriBoard): boolean {
     return onlyDistinctOnRows && onlyDistinctOnColumns
 }
 
-export function conflictsHorizontallyOrVertically(
+export const conflictsHorizontallyOrVertically: BoardChecker = (
     board: HitoriBoard,
     x: number,
     y: number,
-): boolean {
+) => {
     const { size } = board
 
     if (Math.min(x, y) < 0 || Math.max(x, y) + 1 > size) {
@@ -150,7 +107,7 @@ export function conflictsHorizontallyOrVertically(
     return conflictsOnRow || conflictsOnColumn
 }
 
-export function noAdjacentBlackOnBoard(board: HitoriBoard): boolean {
+export const noAdjacentBlackOnBoard: BoardChecker = board => {
     const rows = board.asRows
     const columns = board.asColumns
 
