@@ -95,7 +95,8 @@ class HitoriBoard implements IHitoriBoard {
      */
     public toString = (): string =>
         this.rows
-            .flatMap(row => row.cells)
+            .map(row => row.cells)
+            .flat()
             .reduce((prev, curr) => prev + (curr.confirmedBlack ? 'X' : curr.value), '')
 
     public getCoordinate(x: number, y: number): IHitoriCell {
