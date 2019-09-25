@@ -2,7 +2,7 @@ import HitoriBoard from '../board'
 
 import { IHitoriColumn, IHitoriRow } from '../types'
 
-// import { adjacentTriples, cellBetweenTwoEqual } from './patterns'
+import { adjacentTriples, cellBetweenTwoEqual } from './patterns'
 
 import { markUniqueWhite } from '../transforms/line'
 
@@ -14,17 +14,17 @@ export function startingTechniques(board: HitoriBoard): HitoriBoard {
         // -> Mark white
         .transformAllRowsAndColumns(markUniqueWhite)
 
-    // Search for adjacent triples
-    // -> Mark middle white, adjacent black
-    //.transformAllRowsAndColumns(adjacentTriples)
+        // Search for adjacent triples
+        // -> Mark middle white, adjacent black
+        .transformAllRowsAndColumns(adjacentTriples)
 
-    // Search for value between two cells of same number
-    // -> Middle must be white, adjacent black
-    //.transformAllRowsAndColumns(cellBetweenTwoEqual)
+        // Search for value between two cells of same number
+        // -> Middle must be white, adjacent black
+        .transformAllRowsAndColumns(cellBetweenTwoEqual)
 
-    // Pair induction: a pair and a single on the same line
-    // ->
-    //.transformAllRowsAndColumns(cellBetweenTwoEqual)
+        // Pair induction: a pair and a single on the same line
+        // ->
+        .transformAllRowsAndColumns(cellBetweenTwoEqual)
 
     return transformedBoard
 }
