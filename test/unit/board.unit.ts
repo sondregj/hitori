@@ -1,5 +1,5 @@
-import HitoriBoard from '../../../src/core/board'
-import { InvalidArrayError } from '../../../src/core/errors'
+import HitoriBoard from '../../src/board'
+import { InvalidArrayError } from '../../src/errors'
 
 test('From valid 2D array', () => {
     const board = HitoriBoard.from2DArray([[1, 2, 3], [1, 2, 3], [1, 2, 3]])

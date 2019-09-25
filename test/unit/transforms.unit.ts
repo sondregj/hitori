@@ -1,4 +1,4 @@
-import BoardTransforms from '../../../src/core/checks'
+import {} from '../../src/checks/board'
 
 test.todo('Mark adjacent cells white')
 
