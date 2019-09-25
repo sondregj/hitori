@@ -28,6 +28,18 @@ export const markUniqueWhite: LineTransformer = line => {
     }
 }
 
+export const markValuesBlackOnLineIfNotWhite: LineTransformer = (
+    line,
+    value: number,
+) => {
+    return {
+        cells: line.cells.map(cell =>
+            !cell.confirmedWhite && cell.value === value
+                ? { ...cell, black: true }
+                : cell,
+        ),
+    }
+}
 
 /**
  * If a triple has been identified, this function will mark the middle cell white,
@@ -45,3 +57,11 @@ export const markMiddleOfTripleWhite: LineTransformer = (line, middleIndex: numb
     return line
 }
 
+export const markMiddleOfCellBetweenPairWhite: LineTransformer = (
+    line,
+    middleIndex: number,
+) => {
+    line.cells[middleIndex].confirmedWhite = true
+
+    return line
+}

@@ -23,7 +23,9 @@ export function transformAllRowsAndColumns(
 }
 
 export {
+    markMiddleOfCellBetweenPairWhite,
     markMiddleOfTripleWhite,
     markUniqueWhite,
+    markValuesBlackOnLineIfNotWhite,
 } from './line'
 export { markAdjacentCellsWhite, markCellBlack } from './board'
