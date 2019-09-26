@@ -1,15 +1,20 @@
-import { InvalidArrayError } from './errors'
+import { checkAllRowsAndColumnsOfBoard } from './checks'
+import { transformAllRowsAndColumnsOfBoard } from './transforms'
+
+import { isSolved } from './solver/validator'
+import { transposeBoard } from './utils'
+
 import {
     BoardTransformer,
     IHitoriBoard,
     IHitoriCell,
     IHitoriColumn,
     IHitoriRow,
+    LineChecker,
     LineTransformer,
 } from './types'
 
-import { isSolved } from './solver/validator'
-import { transposeBoard } from './utils'
+import { InvalidArrayError } from './errors'
 
 class HitoriBoard implements IHitoriBoard {
     /* Constructors */
@@ -122,9 +127,7 @@ class HitoriBoard implements IHitoriBoard {
     public get asColumns(): IHitoriColumn[] {
         const rows = this.rows
 
-        return rows[0].cells.map((col, i) => ({
-            cells: rows.map(row => row.cells[i]),
-        }))
+        return transposeBoard(this.rows)
     }
 
     public to2DArray(): number[][] {
