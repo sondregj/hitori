@@ -35,13 +35,6 @@
 
 A simple Hitori solver, implemented with TypeScript.
 
-## Progress
-
-- [x] Models
-- [x] Solver
-- [x] Tests
-- [ ] Documentation
-
 ## Usage
 
 ```javascript
