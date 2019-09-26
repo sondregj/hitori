@@ -8,6 +8,8 @@ import TestBoards, {
     unsolvable,
 } from '../constants/test-boards'
 
+/* Tests on boards */
+
 test('Unsolvable board fails', () => {
     const board = HitoriBoard.from2DArray(unsolvable)
 
@@ -29,7 +31,11 @@ test('Valid four by four', () => {
 test('Stacc competition board succeeds', () => {
     const board = HitoriBoard.from2DArray(staccBoard)
 
+    console.time('Stacc Board')
+
     const [solved] = solve({ board })
+
+    console.timeEnd('Stacc Board')
 
     const solvedString = solved ? solved.toString() : ''
 

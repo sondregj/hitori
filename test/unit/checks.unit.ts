@@ -7,6 +7,8 @@ import {
     onlyDistinctOnLinesOnBoard,
 } from '../../src/checks/board'
 
+/* Board checkers */
+
 test('Only distinct on board', () => {
     const validRows: IHitoriRow[] = [
         {
