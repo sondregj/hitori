@@ -26,15 +26,15 @@ export function solve({
     if (!skipPatterns) {
         let proposal: HitoriBoard
 
-        // TODO 1. Starting techniques
+        // 1. Starting techniques
         proposal = startingTechniques(lastProposal())
         iterations.push(proposal)
 
-        // TODO 2. Corner techniques
+        // 2. Corner techniques
         proposal = cornerTechniques(lastProposal())
         iterations.push(proposal)
 
-        // TODO 3. Advanced techniques
+        // 3. Advanced techniques
         proposal = advancedTechniques(lastProposal())
         iterations.push(proposal)
     }

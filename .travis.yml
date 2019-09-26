@@ -3,10 +3,10 @@ env:
     - NODE_ENV=CI
 matrix:
     include:
-        - name: Node 8
-          node_js: "8"
-        - name: Node 10
-          node_js: "10"
+        #- name: Node 8
+        #  node_js: "8"
+        #- name: Node 10
+        #  node_js: "10"
         - name: Node 12
           node_js: "12"
 install: npm install
