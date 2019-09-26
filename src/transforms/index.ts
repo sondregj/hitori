@@ -2,7 +2,7 @@ import HitoriBoard from '../board'
 import { LineTransformer } from '../types'
 import { transposeBoard } from '../utils'
 
-export function transformAllRowsAndColumns(
+export function transformAllRowsAndColumnsOfBoard(
     board: HitoriBoard,
     lineTransformer: LineTransformer,
 ): HitoriBoard {
