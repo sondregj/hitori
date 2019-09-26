@@ -12,6 +12,8 @@ import { isSolved } from './solver/validator'
 import { transposeBoard } from './utils'
 
 class HitoriBoard implements IHitoriBoard {
+    /* Constructors */
+
     public static from2DArray(array: number[][]): HitoriBoard {
         const size = array.length
 
@@ -72,33 +74,6 @@ class HitoriBoard implements IHitoriBoard {
         this.rows = board.rows
     }
 
-    public get asRows(): IHitoriRow[] {
-        return this.rows
-    }
-
-    public get asColumns(): IHitoriColumn[] {
-        const rows = this.rows
-
-        return rows[0].cells.map((col, i) => ({
-            cells: rows.map(row => row.cells[i]),
-        }))
-    }
-
-    public to2DArray(): number[][] {
-        return this.rows.map(row => row.cells.map(cell => cell.value))
-    }
-
-    /**
-     * Printout intended for Stacc competition
-     *
-     * https://stacc.com/fagkveldkonkurranse
-     */
-    public toString = (): string =>
-        this.rows
-            .map(row => row.cells)
-            .flat()
-            .reduce((prev, curr) => prev + (curr.confirmedBlack ? 'X' : curr.value), '')
-
     public getCoordinate(x: number, y: number): IHitoriCell {
         if (Math.min(x, y) < 0 || Math.max(x, y) + 1 > this.size) {
             throw new Error('Index out of bounds.')
@@ -107,21 +82,13 @@ class HitoriBoard implements IHitoriBoard {
         return this.rows[y].cells[x]
     }
 
-    public copy(): HitoriBoard {
-        const rows = this.asRows.map(row => ({
-            cells: row.cells.map(cell => ({ ...cell })),
-        }))
+    /* Checks */
 
-        return new HitoriBoard({ size: this.size, rows })
+    public solved(): boolean {
+        return isSolved(this)
     }
 
-    public copyData(): IHitoriBoard {
-        const rows = this.asRows.map(row => ({
-            cells: row.cells.map(cell => ({ ...cell })),
-        }))
-
-        return { size: this.size, rows }
-    }
+    /* Transforms */
 
     public transformAllRowsAndColumns(lineTransformer: LineTransformer): HitoriBoard {
         const { size } = this
@@ -146,8 +113,50 @@ class HitoriBoard implements IHitoriBoard {
         return new HitoriBoard(transformedBoard)
     }
 
-    public solved(): boolean {
-        return isSolved(this)
+    /* Representations */
+
+    public get asRows(): IHitoriRow[] {
+        return this.rows
+    }
+
+    public get asColumns(): IHitoriColumn[] {
+        const rows = this.rows
+
+        return rows[0].cells.map((col, i) => ({
+            cells: rows.map(row => row.cells[i]),
+        }))
+    }
+
+    public to2DArray(): number[][] {
+        return this.rows.map(row => row.cells.map(cell => cell.value))
+    }
+
+    /**
+     * Printout intended for Stacc competition
+     *
+     * https://stacc.com/fagkveldkonkurranse
+     */
+    public toString = (): string =>
+        this.rows
+            .flatMap(row => row.cells)
+            .reduce((prev, curr) => prev + (curr.confirmedBlack ? 'X' : curr.value), '')
+
+    /* Operations */
+
+    public copy(): HitoriBoard {
+        const rows = this.asRows.map(row => ({
+            cells: row.cells.map(cell => ({ ...cell })),
+        }))
+
+        return new HitoriBoard({ size: this.size, rows })
+    }
+
+    public copyData(): IHitoriBoard {
+        const rows = this.asRows.map(row => ({
+            cells: row.cells.map(cell => ({ ...cell })),
+        }))
+
+        return { size: this.size, rows }
     }
 }
 
