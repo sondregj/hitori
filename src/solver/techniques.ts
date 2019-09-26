@@ -7,6 +7,8 @@ import { adjacentTriples, cellBetweenTwoEqual } from './patterns'
 import { markUniqueWhite } from '../transforms/line'
 
 export function startingTechniques(board: HitoriBoard): HitoriBoard {
+    // TODO
+
     let transformedBoard: HitoriBoard = board.copy()
 
     transformedBoard = board
@@ -30,11 +32,13 @@ export function startingTechniques(board: HitoriBoard): HitoriBoard {
 }
 
 export function basicTechniques(board: HitoriBoard): HitoriBoard {
+    // TODO
+
     const boardToSolve = board.copy()
 
     const { size } = boardToSolve
 
-    let rows: IHitoriRow[] = [...boardToSolve.asRows]
+    const rows: IHitoriRow[] = [...boardToSolve.asRows]
     const columns: IHitoriColumn[] = [...boardToSolve.asColumns]
 
     // Number can only appear one time in each row and column
@@ -49,6 +53,8 @@ export function basicTechniques(board: HitoriBoard): HitoriBoard {
 }
 
 export function cornerTechniques(board: HitoriBoard): HitoriBoard {
+    // TODO
+
     const boardToSolve = board.copy()
 
     const { size } = boardToSolve

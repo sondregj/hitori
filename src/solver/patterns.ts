@@ -102,6 +102,8 @@ export const cellBetweenTwoEqual = (
 export const pairInduction = (
     line: IHitoriRow | IHitoriColumn,
 ): IHitoriRow | IHitoriColumn => {
+    // TODO
+
     return line
 }
 
