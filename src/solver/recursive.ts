@@ -1,66 +1,41 @@
 import HitoriBoard from '../board'
-import { IHitoriRow } from '../types'
-
-import { conflictsHorizontallyOrVertically } from '../checks/board'
 import { isSolved } from './validator'
 
+import { IHitoriRow } from '../types'
+
 export function solveRecursive(board: HitoriBoard): HitoriBoard | undefined {
-    const { size } = board
+    // Make a copy of the board so that we're certain we don't change it
+    const testRows: IHitoriRow[] = board.copy().asRows
 
-    // Make a copy of the board
-    const testRows: IHitoriRow[] = [...board.rows].map(row => ({
-        cells: row.cells.map(cell => ({ ...cell })),
-    }))
+    // Check all valid configurations of the board recursively
+    const solvedRows = _solveRecursive(testRows, board.asRows, board.size)
 
-    // Cache cells with no conflicts before recursing for performance
-    const noConflicts: boolean[][] = testRows.map((row, yIndex) =>
-        testRows[0].cells.map(
-            (column, xIndex) =>
-                !conflictsHorizontallyOrVertically(
-                    new HitoriBoard({ size, rows: testRows }),
-                    xIndex,
-                    yIndex,
-                ),
-        ),
-    )
-
-    const solvedRows = _solveRecursive(
-        testRows,
-        board.asRows,
-        board.size,
-        0,
-        0,
-        noConflicts,
-    )
-
-    if (!solvedRows) {
-        return undefined
-    }
-
-    return new HitoriBoard({ size: board.size, rows: solvedRows })
+    return solvedRows && new HitoriBoard({ size: board.size, rows: solvedRows })
 }
 
 function _solveRecursive(
     rows: IHitoriRow[],
     confirmed: IHitoriRow[],
     size: number,
-    x: number,
-    y: number,
-    noConflicts: boolean[][],
+    /*noConflicts: boolean[][],*/
+    x: number = 0,
+    y: number = 0,
 ): IHitoriRow[] | undefined {
-    // * - OPTIMALIZATION - *
-    // The check for solved currently takes around 1/8 of the time.
-    // For the main test set that currently means going from 800 secs for main test,
-    // to 100 secs, which is way too much. Best efforts may be placed in pattern techniques,
-    // and similar things, as each cell confirmed before recursing cuts the time in half.
+    // - Further optimalizations
+    //
+    //   The check for solved currently takes around 7/8 of the time.
+    //   For the main test set that currently means going from 800 secs for main test,
+    //   to 100 secs, which is way too much anyway. Best efforts may be placed in pattern techniques,
+    //   and similar things, as each cell confirmed before recursing cuts the time in half.
 
     // Base case, all rules satisfied
     if (isSolved(new HitoriBoard({ rows, size }))) {
         return rows
     }
 
-    // Out of bounds
-    if (Math.max(x, y) >= size) {
+    // Out of bounds, this means we have exhausted all options without
+    // finding a solution
+    if (y >= size) {
         return undefined
     }
 
@@ -68,61 +43,53 @@ function _solveRecursive(
     const nextX = x >= size - 1 ? 0 : x + 1
     const nextY = x >= size - 1 ? y + 1 : y
 
-    // For each choice that can be made
+    // Here, we branch of into all the valid solution trees
     // We respect the choices made in previous pattern checkers
     // Another goal here is also to eliminate decision trees that we know
     // are going to fail, by the rules of Hitori
+
+    // For each valid choice
     // -> Make that choice and recur
 
-    // - There are no conflicts
-    // if (noConflicts[y][x]) {
-    // 		return _solveRecursive(rows, confirmed, size, nextX, nextY, noConflicts)
-    // }
-
-    // - We have already concluded on this cell before recursing
+    /**
+     * - We have already concluded on this cell before recursing
+     *
+     *   In this case we assume it is correct and move on.
+     */
     if (confirmed[y].cells[x].confirmedWhite || confirmed[y].cells[x].confirmedBlack) {
-        return _solveRecursive(rows, confirmed, size, nextX, nextY, noConflicts)
+        return _solveRecursive(rows, confirmed, size, nextX, nextY)
     }
 
-    const noAdjacentBlackCell: boolean = !adjacentBlackCell(rows, x, y)
-
-    // - Test making black
-
-    // We only need to test a black cell in this position if there
-    // are none adjacent to it
-    if (noAdjacentBlackCell) {
+    /**
+     * - Test making black
+     *
+     *   We only need to test a black cell in this position if there
+     *   are none adjacent to it
+     */
+    if (!adjacentBlackCell(rows, x, y)) {
         rows[y].cells[x].confirmedBlack = true
-        const cellBlackResult = _solveRecursive(
-            rows,
-            confirmed,
-            size,
-            nextX,
-            nextY,
-            noConflicts,
-        )
+        const cellBlackResult = _solveRecursive(rows, confirmed, size, nextX, nextY)
 
         if (cellBlackResult) {
             return cellBlackResult
         }
     }
 
-    // - Test not making black
+    /**
+     * - Test not making black
+     *
+     *   Any number of cells in a row can be white, so we need to
+     *   check all of them.
+     */
     rows[y].cells[x].confirmedBlack = false
-
-    const cellNotBlackResult = _solveRecursive(
-        rows,
-        confirmed,
-        size,
-        nextX,
-        nextY,
-        noConflicts,
-    )
+    const cellNotBlackResult = _solveRecursive(rows, confirmed, size, nextX, nextY)
 
     if (cellNotBlackResult) {
         return cellNotBlackResult
     }
 
     // No choices remain
+    // After exhausting all the valid decisions, there is no where else to go
     return undefined
 }
 
