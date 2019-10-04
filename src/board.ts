@@ -141,7 +141,7 @@ class HitoriBoard implements IHitoriBoard {
      */
     public toString = (): string =>
         this.rows
-            //.flatMap(row => row.cells)
+            // .flatMap(row => row.cells)
             .reduce<IHitoriCell[]>((all, row) => [...all, ...row.cells], [])
             .reduce((prev, curr) => prev + (curr.confirmedBlack ? 'X' : curr.value), '')
 
