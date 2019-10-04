@@ -89,7 +89,7 @@ function _solveRecursive(
     }
 
     // No choices remain
-    // After exhausting all the valid decisions, there is no where else to go
+    // After exhausting all the valid decisions, there is nowhere else to go
     return undefined
 }
 
@@ -99,7 +99,7 @@ function adjacentBlackCell(rows: IHitoriRow[], x: number, y: number): boolean {
         [[x - 1, y], [x + 1, y], [x, y - 1], [x, y + 1]]
             .map(coordinate => ({ xIndex: coordinate[0], yIndex: coordinate[1] }))
 
-            // Filter out indices outside the board
+            // Filter out the indices outside the board
             .filter(
                 ({ xIndex, yIndex }) =>
                     Math.min(xIndex, yIndex) >= 0 &&
