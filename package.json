@@ -1,6 +1,6 @@
 {
 	"name": "hitori",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "Hitori solver",
 	"author": "Sondre Gjellestad <sondre.gjellestad@hotmail.com> (https://sondregjellestad.space)",
 	"homepage": "https://github.com/sondregj/hitori#readme",
@@ -20,7 +20,7 @@
 		"preversion": "npm run lint",
 		"version": "npm run format && git add -A src",
 		"postversion": "git push && git push --tags",
-		"prepublishOnly": "npm test && npm run lint && npm run build"
+		"prepublishOnly": "npm ci && npm test && npm run lint && npm run build"
 	},
 	"bugs": {
 		"url": "https://github.com/sondregj/hitori/issues"
