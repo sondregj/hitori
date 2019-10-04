@@ -1,6 +1,6 @@
 {
 	"name": "hitori",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "Hitori solver",
 	"author": "Sondre Gjellestad <sondre.gjellestad@hotmail.com> (https://sondregjellestad.space)",
 	"homepage": "https://github.com/sondregj/hitori#readme",
