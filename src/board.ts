@@ -16,7 +16,7 @@ import {
 
 import { InvalidArrayError } from './errors'
 
-class HitoriBoard implements IHitoriBoard {
+export class HitoriBoard implements IHitoriBoard {
     /* Constructors */
 
     public static from2DArray(array: number[][]): HitoriBoard {
@@ -163,5 +163,3 @@ class HitoriBoard implements IHitoriBoard {
         return { size: this.size, rows }
     }
 }
-
-export default HitoriBoard

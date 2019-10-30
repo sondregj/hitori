@@ -1,4 +1,4 @@
-import HitoriBoard from '../board'
+import { HitoriBoard } from '../board'
 
 import { solveRecursive } from './recursive'
 import { advancedTechniques, cornerTechniques, startingTechniques } from './techniques'

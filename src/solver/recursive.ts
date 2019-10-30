@@ -1,4 +1,4 @@
-import HitoriBoard from '../board'
+import { HitoriBoard } from '../board'
 import { isSolved } from './validator'
 
 import { IHitoriRow } from '../types'

@@ -1,4 +1,4 @@
-import { IHitoriColumn, IHitoriRow, LineChecker } from '../types'
+import { LineChecker } from '../types'
 
 export const onlyDistinctOnLine: LineChecker = line => {
     const values = line.cells

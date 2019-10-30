@@ -1,4 +1,4 @@
-import HitoriBoard from '../board'
+import { HitoriBoard } from '../board'
 
 import { BoardTransformer, IHitoriColumn, IHitoriRow } from '../types'
 

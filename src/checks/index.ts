@@ -1,4 +1,4 @@
-import HitoriBoard from '../board'
+import { HitoriBoard } from '../board'
 import { LineChecker } from '../types'
 import { transposeBoard } from '../utils'
 

@@ -1,4 +1,4 @@
-import { IHitoriColumn, IHitoriRow, LineTransformer } from '../types'
+import { LineTransformer } from '../types'
 
 export const markUniqueWhite: LineTransformer = line => {
     interface ValueCount {
