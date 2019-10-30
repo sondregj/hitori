@@ -82,15 +82,10 @@ function _solveRecursive(
      *   check all of them.
      */
     rows[y].cells[x].confirmedBlack = false
-    const cellNotBlackResult = _solveRecursive(rows, confirmed, size, nextX, nextY)
-
-    if (cellNotBlackResult) {
-        return cellNotBlackResult
-    }
 
     // No choices remain
     // After exhausting all the valid decisions, there is nowhere else to go
-    return undefined
+    return _solveRecursive(rows, confirmed, size, nextX, nextY)
 }
 
 function adjacentBlackCell(rows: IHitoriRow[], x: number, y: number): boolean {
